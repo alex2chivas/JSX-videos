@@ -10,8 +10,7 @@ export class SearchBar extends Component {
 	onFormSubmit = (event) => {
 		event.preventDefault();
 
-		// TODO:
-		// Callback from parent Component
+		this.props.onTermSubmit(this.state.term);
 	};
 
 	render() {
