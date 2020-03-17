@@ -4,24 +4,19 @@ import SearchBar from './SearchBar';
 import youtube from './apis/youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
-import { randomItem } from './randomItem';
+import { arrayOfItems, randomSelection } from './randomArray';
 
 export class App extends Component {
 	state = { videos: [], selectedVideo: null };
 
-	randomSelection = (items) => {
-		return items[Math.floor(Math.random() * items.length)];
-	};
-
 	componentDidMount() {
-		this.onTermSubmit(this.randomSelection(randomItem));
+		this.onTermSubmit(randomSelection(arrayOfItems));
 	}
 
 	onTermSubmit = async (term) => {
 		const response = await youtube.get('/search', {
 			params: {
-				q: term,
-				order: 'rating'
+				q: term
 			}
 		});
 

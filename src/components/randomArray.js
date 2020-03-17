@@ -1,4 +1,8 @@
-export let randomItem = [
+export function randomSelection(items) {
+	return items[Math.floor(Math.random() * items.length)];
+}
+
+export const arrayOfItems = [
 	'buildings',
 	'soccer',
 	'basketball',
