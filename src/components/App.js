@@ -4,26 +4,17 @@ import SearchBar from './SearchBar';
 import youtube from './apis/youtube';
 import VideoList from './VideoList';
 import VideoDetail from './VideoDetail';
+import { randomItem } from './randomItem';
 
 export class App extends Component {
 	state = { videos: [], selectedVideo: null };
 
-	random_item = (items) => {
+	randomSelection = (items) => {
 		return items[Math.floor(Math.random() * items.length)];
 	};
 
 	componentDidMount() {
-		this.onTermSubmit(
-			this.random_item([
-				'buildings',
-				'soccer',
-				'basketball',
-				'javascript',
-				'python',
-				'fortnite',
-				'ps4'
-			])
-		);
+		this.onTermSubmit(this.randomSelection(randomItem));
 	}
 
 	onTermSubmit = async (term) => {
