@@ -35,6 +35,8 @@ export class App extends Component {
 		this.setState({
 			selectedVideo: video
 		});
+
+		window.scrollTo(0, 0);
 	};
 
 	render() {
