@@ -8,6 +8,24 @@ import VideoDetail from './VideoDetail';
 export class App extends Component {
 	state = { videos: [], selectedVideo: null };
 
+	random_item = (items) => {
+		return items[Math.floor(Math.random() * items.length)];
+	};
+
+	componentDidMount() {
+		this.onTermSubmit(
+			this.random_item([
+				'buildings',
+				'soccer',
+				'basketball',
+				'javascript',
+				'python',
+				'fortnite',
+				'ps4'
+			])
+		);
+	}
+
 	onTermSubmit = async (term) => {
 		const response = await youtube.get('/search', {
 			params: {
@@ -17,7 +35,10 @@ export class App extends Component {
 		});
 
 		if (response.status === 200) {
-			this.setState({ videos: response.data.items });
+			this.setState({
+				videos: response.data.items,
+				selectedVideo: response.data.items[0]
+			});
 		} else {
 			console.log(' Error with the Api call for youtube videos ');
 			alert('The request for videos is currently not working, please try again later');
@@ -34,8 +55,16 @@ export class App extends Component {
 		return (
 			<div className='ui container'>
 				<SearchBar onTermSubmit={this.onTermSubmit} />
-				<VideoDetail video={this.state.selectedVideo} />
-				<VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+				<div className='ui grid'>
+					<div className='ui row'>
+						<div className='eleven wide column'>
+							<VideoDetail video={this.state.selectedVideo} />
+						</div>
+						<div className='five wide column'>
+							<VideoList videos={this.state.videos} onVideoSelect={this.onVideoSelect} />
+						</div>
+					</div>
+				</div>
 			</div>
 		);
 	}
