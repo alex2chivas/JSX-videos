@@ -6,13 +6,19 @@ import youtube from './apis/youtube';
 export class App extends Component {
 	state = { videos: [] };
 
-	onTermSubmit = (term) => {
-		youtube.get('/search', {
+	onTermSubmit = async (term) => {
+		const response = await youtube.get('/search', {
 			params: {
 				q: term,
 				order: 'rating'
 			}
 		});
+
+		if (response.status === 200) {
+			this.setState({ videos: response.data.items });
+		} else {
+			console.log(' Error with the Api call for youtube videos ');
+		}
 	};
 
 	render() {
